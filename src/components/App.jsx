@@ -50,10 +50,17 @@ function App() {
   
   if(isLoading1 || isLoading2){
     return(
-
+<>
       <div className="App">
-        <h1>Cargando</h1>
+        <section className="randomSection">
+          <h1>Perritos Aleatorios</h1>
+          <div>
+            <h2>Cargando... </h2>
+          </div>
+          <Btn updateImg={updateImg}>Recargar</Btn>
+        </section>
       </div>
+    </>
     ) 
   }
 
