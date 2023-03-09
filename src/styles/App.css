@@ -1,18 +1,37 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 0;
+  /* padding: 2rem; */
   text-align: center;
+  background-color: rgb(8,16,40 );
 }
 
-.App{
+.randomSection{
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.App{
+  color:rgb(209,214,214 );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
+}
+
+.App h1{
+  text-align: left;
+  width: 90%;
+  border-bottom: solid 3px rgba(209, 214, 214, 0.6);
 }
