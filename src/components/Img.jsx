@@ -1,9 +1,9 @@
 import React from 'react'
-import "../styles/Img.css"
+import '../styles/Img.css'
 
-function Img({imgUrl}) {
+function Img ({ imgUrl }) {
   return (
-    <img className='imagen' src = {imgUrl}/>
+    <img className='imagen' src={imgUrl} />
   )
 }
 

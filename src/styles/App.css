@@ -1,26 +1,21 @@
-#root {
+/* #root {
   width: 100vw;
-  height: 100vh;
-  margin: 0 0;
-  /* padding: 2rem; */
-  text-align: center;
-  background-color: rgb(8,16,40 );
-}
 
-.randomSection{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  margin: 0 0;
+
+  text-align: center;
+
+} */
+
+
 
 .App{
   color:rgb(209,214,214 );
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  
   margin: 0;
 }
 
@@ -30,8 +25,17 @@
   }
 }
 
-.App h1{
-  text-align: left;
-  width: 90%;
-  border-bottom: solid 3px rgba(209, 214, 214, 0.6);
+
+ 
+footer{
+  position:relative;
+  margin-top: 40px;
+  bottom: 10px;
+}
+
+.FavoritesSection{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

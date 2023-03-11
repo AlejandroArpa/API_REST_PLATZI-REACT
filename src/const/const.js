@@ -1,1 +1,2 @@
-export const APIurl = "https://api.thedogapi.com/v1/images/search"
+export const APIurl = 'https://api.thedogapi.com/v1/images/search?limit=5&api_key=live_fIEWpvsxR2nsFX3HpBv6cLMM3rq0djWgysM18129oLB5F1faSQ9TlBE0ai2tCEPw'
+export const APIurlFav = 'https://api.thedogapi.com/v1/favourites?limit=2&api_key=live_fIEWpvsxR2nsFX3HpBv6cLMM3rq0djWgysM18129oLB5F1faSQ9TlBE0ai2tCEPw'

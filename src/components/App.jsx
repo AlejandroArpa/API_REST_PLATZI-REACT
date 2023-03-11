@@ -1,80 +1,97 @@
-import {APIurl} from "../const/const"
+import { APIurl, APIurlFav } from '../const/const'
 import '../styles/App.css'
-import { useEffect, useState } from "react"
-import Btn from "./Btn";
-import Img from "./Img";
+import { useEffect, useState } from 'react'
+import Btn from './Btn'
+import Img from './Img'
+import Section from './Section'
 
+function App () {
+  const [rdmurls, setRdmUrls] = useState([''])
+  const [favUrls, setFavUrls] = useState([''])
+  const [loadingRdm, setLoadingRdm] = useState(1)
 
-function App() {
-  const [isLoading,setIsLoading] = useState(true); 
-  const [isLoading1,setIsLoading1] = useState(true); 
-  const [isLoading2,setIsLoading2] = useState(true); 
-  const [imgUrl1, setImgUrl1] = useState(null);
-  const [imgUrl2, setImgUrl2] = useState(null);
-  const [imgUrl3, setImgUrl3] = useState(null);
-
-  const Fetchh = () =>{
-    fetch(APIurl)  
+  const Fetchh = () => {
+    fetch(APIurl)
       .then(res => res.json())
       .then(data => {
-        setImgUrl1(data[0].url);
-        setIsLoading1(false);
-      });
-      fetch(APIurl)  
-      .then(res => res.json())
-      .then(data => {
-        setImgUrl2(data[0].url);
-        setIsLoading2(false);
-      });
-      fetch(APIurl)  
-      .then(res => res.json())
-      .then(data => {
-        setImgUrl3(data[0].url);
-        setIsLoading3(false);
-      });
+        setRdmUrls(data)
+        setLoadingRdm(0)
+      })
   }
 
-  const Loading = () => {
-    setIsLoading2(true);
-    setIsLoading1(true);
+  const FetchhFav = () => {
+    fetch(APIurlFav)
+      .then(res => res.json())
+      .then(data => {
+        setFavUrls(data)
+      })
+  }
+
+  const LoadRandomDogs = () => {
+    setLoadingRdm(1)
   }
 
   useEffect(() => {
-    Fetchh();
+    Fetchh()
   }, [])
 
-  const updateImg = () => {
-    Loading();
-    Fetchh();
+  const updateImgFav = () => {
+    LoadRandomDogs()
+    FetchhFav()
   }
-  
-  if(isLoading1 || isLoading2){
-    return(
-<>
-      <div className="App">
-        <section className="randomSection">
-          <h1>Perritos Aleatorios</h1>
-          <div>
-            <h2>Cargando... </h2>
-          </div>
-          <Btn updateImg={updateImg}>Recargar</Btn>
-        </section>
-      </div>
-    </>
-    ) 
+
+  const updateImg = () => {
+    LoadRandomDogs()
+    Fetchh()
+  }
+
+  const Fav = () => {
+    if (favUrls[0] === '') {
+      return (
+        <h2>Uppss, no tienes favoritos</h2>
+      )
+    }
+    return (
+      <Img imgUrl={favUrls[0]} />
+    )
+  }
+
+  if (loadingRdm === 1) {
+    return (
+      <>
+        <div className='App'>
+          <Section
+            clssname='randomSection'
+            title='Perritos aleatorios'
+            flag={1}
+            imgArray={[]}
+          />
+
+          <footer> Designed by <strong><span>Alejandro Ramírez</span></strong></footer>
+        </div>
+      </>
+    )
   }
 
   return (
     <>
-      <div className="App">
-        <section className="randomSection">
-          <h1>Perritos Aleatorios</h1>
-          <div>
-            <Img imgUrl = {imgUrl1}/>
-            <Img imgUrl = {imgUrl2}/>
-          </div>
-          <Btn updateImg={updateImg}>Recargar</Btn>
-        </section>
+      <div className='App'>
+        <Section
+          clssname='randomSection'
+          title='Perritos aleatorios'
+          flag={0}
+          imgArray={rdmurls}
+          updateImg={updateImg}
+        />
+        <Section
+          clssname='FavoritesSection'
+          title='Perritos Favoritos'
+          flag={1}
+          imgArray={[]}
+          updateImg={updateImg}
+        />
+        {Fav()}
+        <footer> Designed by <strong><span>Alejandro Ramírez</span></strong></footer>
       </div>
     </>
   )
