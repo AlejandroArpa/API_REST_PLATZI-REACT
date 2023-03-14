@@ -15,7 +15,8 @@
 .imgContainer{
   display: flex;
   align-items: center;
-
+  width: 90%;
+  justify-content: center;
 }
 
 .imgContainer div{

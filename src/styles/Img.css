@@ -1,8 +1,50 @@
 .imagen{
-  height: 250px;
-  width: 250px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   border-radius: 20px;
-  margin: 16px 8px 16px 8px;
-  align-self: center;
+  top:50%
 }
+
+.ImgContainer{
+  position: relative;
+  height: 200px;
+  width: 200px;
+  margin: 10px;
+}
+
+.BTN{
+  position: absolute;
+  top:3px;
+  right: 3px;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+
+  text-align: center;
+  text-justify: cente;
+  font-weight: 900;
+  font-size: 15px;
+  color: aliceblue;
+  border: 0;
+  }
+  .BTN:hover{
+    cursor: pointer;
+
+  }
+
+  .Add{
+    background-color: rgba(11, 230, 11, 0.5);
+  }
+
+  .Add:hover{
+    background-color: rgb(91, 243, 91);
+  }
+  
+  .Rm{
+    background-color: rgba(230, 11, 11, 0.5);
+  }
+
+  .Rm:hover{
+    background-color: rgb(243, 91, 91);
+  }

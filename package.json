@@ -9,8 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.12",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-grid": "^4.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
@@ -18,9 +22,5 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "standard": "^17.0.0",
     "vite": "^4.1.0"
-  },
-  "eslintConfig": {
-    "extends":"./node_modules/standard/eslintrc.json" 
-  } 
-
+  }
 }

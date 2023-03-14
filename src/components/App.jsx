@@ -1,99 +1,142 @@
-import { APIurl, APIurlFav } from '../const/const'
+import { APIurl, APIurlFav, APIurlDelFav,APIkey } from '../const/const'
 import '../styles/App.css'
-import { useEffect, useState } from 'react'
-import Btn from './Btn'
-import Img from './Img'
+import { useState } from 'react'
+
 import Section from './Section'
+import useFetch from '../Hooks/useFetch'
 
 function App () {
+  
   const [rdmurls, setRdmUrls] = useState([''])
   const [favUrls, setFavUrls] = useState([''])
-  const [loadingRdm, setLoadingRdm] = useState(1)
+  const [loadRdm, setLoadingRdm] = useState(false)
+  const [loadFav, setLoadingFav] = useState(false)
+  let [loadingRdm]=useFetch(APIurl,setRdmUrls)
+  const [loadingFav]=useFetch(APIurlFav, setFavUrls)
 
-  const Fetchh = () => {
-    fetch(APIurl)
+
+  const Fetch=(url, load, datas) =>{
+    load(true)
+    fetch(url)
       .then(res => res.json())
       .then(data => {
-        setRdmUrls(data)
-        setLoadingRdm(0)
+        datas(data)
+        load(false)
+
+      })
+      .catch(err => {
+
+        alert(`Hubo un error ${err.status}`)
       })
   }
+  
 
-  const FetchhFav = () => {
-    fetch(APIurlFav)
-      .then(res => res.json())
-      .then(data => {
-        setFavUrls(data)
+  const saveFav = (urlToSave) => {
+    let id=""
+    let validate=``
+    rdmurls.map((imagen)=>{
+      if(imagen.url===urlToSave){
+        id=imagen.id
+        validate=imagen.id;
+      }
+    })
+
+    if(favUrls.find(e=>e.image_id===validate)){
+      alert("Perrito existente en favoritos")
+    }
+    // else{return}
+    else{
+      fetch(APIurlFav,{
+        method:'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          image_id: id
+        }
+        )
       })
-  }
+      .then(res => {
+      })
+      .finally(()=>{
+        Fetch(APIurlFav, setLoadingFav, setFavUrls)
+      })
+      
+    }
+    }
 
-  const LoadRandomDogs = () => {
-    setLoadingRdm(1)
-  }
+  const deleteFav = (url) => {
+   
+    favUrls.map((imagen)=>
+    {
+      if(imagen.image.url===url){
 
-  useEffect(() => {
-    Fetchh()
-  }, [])
-
-  const updateImgFav = () => {
-    LoadRandomDogs()
-    FetchhFav()
-  }
-
-  const updateImg = () => {
-    LoadRandomDogs()
-    Fetchh()
-  }
-
-  const Fav = () => {
-    if (favUrls[0] === '') {
-      return (
-        <h2>Uppss, no tienes favoritos</h2>
+        fetch(`${APIurlDelFav}${imagen.id.toString()}`,{
+          method:'DELETE',
+            headers: {
+              'Content-Type':'application/json',
+              'x-api-key' : APIkey
+            },
+            body: JSON.stringify({
+            }
+            )
+          })
+          .then(res => {
+            
+          })
+          .catch(err => {
+            console.log(err)
+            alert(`Hubo un error ${err.status}`)
+             }
+           )
+           .finally(()=>{
+            Fetch(APIurlFav, setLoadingFav, setFavUrls)
+          })
+        }
+      }
       )
     }
-    return (
-      <Img imgUrl={favUrls[0]} />
-    )
-  }
+    
 
-  if (loadingRdm === 1) {
-    return (
-      <>
-        <div className='App'>
-          <Section
-            clssname='randomSection'
-            title='Perritos aleatorios'
-            flag={1}
-            imgArray={[]}
-          />
+      
+    
+  
 
-          <footer> Designed by <strong><span>Alejandro Ramírez</span></strong></footer>
-        </div>
-      </>
-    )
-  }
 
-  return (
-    <>
+  if(loadingRdm || loadingFav){
+    return(
       <div className='App'>
-        <Section
-          clssname='randomSection'
-          title='Perritos aleatorios'
-          flag={0}
-          imgArray={rdmurls}
-          updateImg={updateImg}
-        />
-        <Section
-          clssname='FavoritesSection'
-          title='Perritos Favoritos'
-          flag={1}
-          imgArray={[]}
-          updateImg={updateImg}
-        />
-        {Fav()}
-        <footer> Designed by <strong><span>Alejandro Ramírez</span></strong></footer>
+        <h1>Cargando...</h1>
       </div>
-    </>
+    )
+  }
+
+  return(
+    <div className='App'>
+      <Section 
+        clssname='randomSection'
+        title='Perritos aleatorios'
+        flag={loadRdm}
+        imgArray={rdmurls}
+        fun={Fetch}
+        url={APIurl}
+        setLoadValue={setLoadingRdm}
+        setValue={setRdmUrls}
+        imgBtnFunc={saveFav}
+        boton={true}
+        botonImg='Add'
+      />
+      <Section
+        clssname='FavoritesSection'
+        title='Perritos Favoritos'
+        flag={loadFav}
+        imgArray={favUrls}
+        boton={false}
+        botonImg='Rm'
+        imgBtnFunc={deleteFav}
+      />
+      <footer> Designed by <strong><span>Alejandro Ramírez</span></strong></footer>
+    </div>
   )
 }
 
