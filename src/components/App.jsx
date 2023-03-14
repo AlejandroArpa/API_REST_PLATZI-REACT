@@ -1,7 +1,7 @@
 import { APIurl, APIurlFav, APIurlDelFav,APIkey } from '../const/const'
 import '../styles/App.css'
 import { useState } from 'react'
-
+import Form from './Form'
 import Section from './Section'
 import useFetch from '../Hooks/useFetch'
 
@@ -59,6 +59,7 @@ function App () {
       .then(res => {
       })
       .finally(()=>{
+        alert("Perrito agregado a favoritos")
         Fetch(APIurlFav, setLoadingFav, setFavUrls)
       })
       
@@ -90,6 +91,7 @@ function App () {
              }
            )
            .finally(()=>{
+            alert("Perrito eliminado de favoritos")
             Fetch(APIurlFav, setLoadingFav, setFavUrls)
           })
         }
@@ -126,6 +128,9 @@ function App () {
         boton={true}
         botonImg='Add'
       />
+      {/* <Form
+      
+      /> */}
       <Section
         clssname='FavoritesSection'
         title='Perritos Favoritos'
